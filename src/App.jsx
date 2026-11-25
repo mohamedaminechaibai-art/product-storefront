@@ -149,17 +149,33 @@ function App() {
   const pageNumbers = Array.from({ length: lastPage }, (_, index) => index + 1);
 
   return (
-    <div className="min-h-screen p-4 md:p-6">
+    <div className="min-h-screen px-4 py-5 md:px-8">
       <div className="max-w-6xl mx-auto">
-        <header className="surface flex justify-between items-center px-5 py-4 mb-6">
-          <Link
-            to="/"
-            className="text-xl font-bold text-gray-900 hover:text-emerald-600 transition-colors duration-300"
-          >
-            Storefront
+        {/* Header */}
+        <header className="surface sticky top-4 z-20 flex items-center justify-between px-5 py-3.5 mb-8">
+          <Link to="/" className="flex items-center gap-2.5 group">
+            <span className="h-3 w-3 rounded-full bg-emerald-400 transition-transform duration-300 group-hover:scale-125" />
+            <span className="text-lg font-semibold tracking-tight text-gray-800 transition-colors duration-300 group-hover:text-emerald-600">
+              Storefront
+            </span>
           </Link>
-          <span className="text-sm font-medium bg-emerald-50 text-emerald-700 px-3 py-1 rounded-full">
-            Cart: {totalCartItems}
+
+          <span className="flex items-center gap-2 text-sm font-medium bg-emerald-50 text-emerald-700 px-3.5 py-1.5 rounded-full transition-all duration-300 hover:bg-emerald-100">
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <circle cx="9" cy="20" r="1.5" />
+              <circle cx="18" cy="20" r="1.5" />
+              <path d="M2 3h3l2.7 12.4a1 1 0 0 0 1 .8h8.9a1 1 0 0 0 1-.8L20 7H6" />
+            </svg>
+            {totalCartItems}
           </span>
         </header>
 
@@ -175,7 +191,8 @@ function App() {
                     onCancelEdit={() => setEditingProduct(null)}
                   />
 
-                  <div className="surface p-4 mb-6 space-y-3">
+                  {/* Filters */}
+                  <div className="surface p-4 md:p-5 mb-8 space-y-4">
                     <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
                       <input
                         type="text"
@@ -231,10 +248,11 @@ function App() {
                       </div>
                     </div>
 
-                    <div className="flex justify-between items-center text-sm text-gray-600">
+                    <div className="flex flex-wrap justify-between items-center gap-2 text-sm text-gray-500">
                       <span>
-                        Total matching products: <strong>{totalProducts}</strong> (Page{' '}
-                        {currentPage} of {lastPage})
+                        <strong className="text-gray-800">{totalProducts}</strong> products
+                        <span className="mx-2 text-gray-300">•</span>
+                        Page {currentPage} of {lastPage}
                       </span>
 
                       {hasActiveFilters && (
@@ -243,20 +261,21 @@ function App() {
                           onClick={handleClearFilters}
                           className="btn btn-ghost"
                         >
-                          Reset Filters
+                          Reset filters
                         </button>
                       )}
                     </div>
                   </div>
 
                   {error && (
-                    <div className="surface p-4 mb-6 text-sm text-red-600 border border-red-200">
+                    <div className="mb-6 rounded-2xl border border-red-100 bg-red-50/80 px-4 py-3 text-sm text-red-500 transition-all">
                       {error}
                     </div>
                   )}
 
                   {loading ? (
-                    <div className="surface p-8 text-center text-gray-600">
+                    <div className="surface p-10 flex items-center justify-center gap-3 text-gray-500">
+                      <span className="pulse-dot h-2.5 w-2.5 rounded-full bg-emerald-400" />
                       Loading products...
                     </div>
                   ) : (
@@ -267,8 +286,9 @@ function App() {
                     />
                   )}
 
+                  {/* Pagination */}
                   {lastPage > 1 && (
-                    <div className="mt-8 flex flex-wrap items-center justify-center gap-2">
+                    <div className="mt-10 mb-4 flex flex-wrap items-center justify-center gap-2">
                       <button
                         type="button"
                         disabled={currentPage <= 1}
@@ -283,7 +303,7 @@ function App() {
                           key={page}
                           type="button"
                           onClick={() => setCurrentPage(page)}
-                          className={`btn ${
+                          className={`btn min-w-[2.5rem] ${
                             page === currentPage ? 'btn-primary' : 'btn-ghost'
                           }`}
                         >
